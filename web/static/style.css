@@ -1,0 +1,228 @@
+/*
+  DNA demo — biotech-inspired glass UI; timing still from dna_core.PAUSE + SSE.
+*/
+
+:root {
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-display: "Outfit", var(--font-body);
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --bg: #030712;
+  --accent-teal: #2dd4bf;
+  --accent-green: #4ade80;
+  --accent-blue: #38bdf8;
+  --card: rgba(15, 23, 42, 0.65);
+  --border: rgba(45, 212, 191, 0.2);
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--text);
+  background: radial-gradient(ellipse at top, #0c4a6e 0%, var(--bg) 55%);
+  background-attachment: fixed;
+}
+
+.bg-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.bg-glow-a {
+  width: 400px;
+  height: 400px;
+  background: var(--accent-teal);
+  top: 10%;
+  left: -10%;
+}
+
+.bg-glow-b {
+  width: 320px;
+  height: 320px;
+  background: var(--accent-green);
+  bottom: 5%;
+  right: -5%;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.hero-icon {
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 0 16px rgba(45, 212, 191, 0.5));
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 4vw, 2.1rem);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, var(--accent-teal), var(--accent-green));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  margin: 0.45rem 0 0;
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+}
+
+.card {
+  background: var(--card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.stage-card {
+  border-color: rgba(56, 189, 248, 0.15);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.btn {
+  border: none;
+  padding: 0.55rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.15s, background 0.15s;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-run {
+  background: linear-gradient(135deg, #0d9488, #059669);
+  color: #ecfdf5;
+  box-shadow: 0 4px 16px rgba(13, 148, 136, 0.45);
+}
+
+.btn-run:hover:not(:disabled) {
+  box-shadow: 0 6px 22px rgba(5, 150, 105, 0.55);
+}
+
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.status-pill {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-muted);
+}
+
+.status-pill.running {
+  background: rgba(45, 212, 191, 0.2);
+  color: var(--accent-teal);
+  box-shadow: 0 0 12px rgba(45, 212, 191, 0.25);
+}
+
+.terminal-frame {
+  padding: 3px;
+  border-radius: 0.65rem;
+  background: linear-gradient(
+    135deg,
+    rgba(45, 212, 191, 0.4),
+    rgba(56, 189, 248, 0.2),
+    rgba(74, 222, 128, 0.35)
+  );
+}
+
+.output {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.25;
+  background: #020617;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  min-height: 16rem;
+  max-height: 24rem;
+  overflow-y: auto;
+  margin: 0;
+  color: var(--accent-green);
+  text-shadow: 0 0 8px rgba(74, 222, 128, 0.35);
+}
+
+.help {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.help h2 {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  color: var(--text);
+  margin: 0 0 0.75rem;
+}
+
+.help h3 {
+  font-size: 0.9375rem;
+  color: #e2e8f0;
+  margin: 1rem 0 0.35rem;
+}
+
+.help strong {
+  color: var(--accent-teal);
+}
+
+.help ul {
+  margin: 0.25rem 0 0;
+  padding-left: 1.2rem;
+}

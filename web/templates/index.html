@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<!--
+
+  DNA Visualization page structure:
+
+    - Controls toggle EventSource in static/app.js (not inline script).
+
+    - #output is filled line-by-line from GET /stream (SSE), server logic in main.py + dna_core.py.
+
+    - Help section is static; pause_seconds comes from dna_core.PAUSE via Jinja.
+
+-->
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DNA Visualization</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Outfit:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+
+      rel="stylesheet"
+
+    />
+
+    <link rel="stylesheet" href="/static/style.css" />
+
+  </head>
+
+  <body>
+
+    <div class="bg-glow bg-glow-a" aria-hidden="true"></div>
+
+    <div class="bg-glow bg-glow-b" aria-hidden="true"></div>
+
+
+
+    <main class="page">
+
+      <header class="hero">
+
+        <div class="hero-icon" aria-hidden="true">🧬</div>
+
+        <h1>DNA Visualization</h1>
+
+        <p class="tagline">Scrolling ASCII double-helix animation</p>
+
+      </header>
+
+
+
+      <section class="card stage-card">
+
+        <div class="controls">
+
+          <button type="button" id="run-btn" class="btn btn-run">Run</button>
+
+          <button type="button" id="pause-btn" class="btn btn-ghost" disabled>
+
+            Pause
+
+          </button>
+
+          <button type="button" id="clear-btn" class="btn btn-ghost">Clear</button>
+
+          <span class="status-pill" id="status">Paused</span>
+
+        </div>
+
+
+
+        <div class="terminal-frame">
+
+          <pre id="output" class="output" aria-live="polite"></pre>
+
+        </div>
+
+      </section>
+
+
+
+      <section class="card help" aria-labelledby="help-heading">
+
+        <h2 id="help-heading">Help</h2>
+
+        <h3>About this app</h3>
+
+        <p>
+
+          A simple animation of a DNA double helix built from text characters.
+
+          Each row shows base pairs (A–T and C–G) between ladder rungs, scrolling
+
+          upward in a continuous stream.
+
+        </p>
+
+        <h3>How to use it</h3>
+
+        <ul>
+
+          <li><strong>Run</strong> starts the animation (about {{ pause_seconds }} seconds between rows).</li>
+
+          <li><strong>Pause</strong> stops new rows from appearing.</li>
+
+          <li><strong>Clear</strong> empties the display; run again to restart.</li>
+
+          <li>The view keeps the most recent lines and scrolls automatically.</li>
+
+        </ul>
+
+      </section>
+
+    </main>
+
+    <script src="/static/app.js"></script>
+
+  </body>
+
+</html>
+
