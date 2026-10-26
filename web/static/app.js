@@ -81,3 +81,12 @@ pauseBtn.addEventListener("click", () => {
 clearBtn.addEventListener("click", () => {
   output.textContent = "";
 });
+
+document.querySelectorAll("[data-help-jump]").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.getElementById("help-heading")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  });
+});
